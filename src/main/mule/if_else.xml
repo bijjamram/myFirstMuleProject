@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="77c05edc-8f49-43c5-8d5a-22c106a769f7" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="if_elseFlow" doc:id="77be70d1-9e06-4f38-aecf-9573473f2a8c" >
+		<ee:transform doc:name="Transform Message" doc:id="6bbe9a8f-f1e7-4693-8ef3-c3fe4e36d5ec" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var a=76
+---
+// if we are not using else statement do below
+	//("name":"Ram") if(a>=10)	
+	("addr":"addanki") if(a<20)
+
+
+/*if(a >100) "ram" 
+else if(a<=100 and a>50 ) "Aruna"
+else if(a<=50 and a>0) "Lalith"
+else "god"*/
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="multi-part" doc:id="ec42a36e-cf51-4015-8f88-cbea1e4df9c3" >
+		<http:listener doc:name="Listener" doc:id="e1303d7d-9200-4a96-9192-9d50b4c40aac" config-ref="HTTP_Listener_config" path="/test"/>
+		<ee:transform doc:name="Transform Message" doc:id="91f0c845-f80a-4ac3-891b-23e81e24c8d8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="Map_MapObjectFlow" doc:id="60742614-c754-4720-a82a-403bf6b2a410" >
+		<ee:transform doc:name="map example" doc:id="1a94a710-1c8e-45f8-9323-8a5c08029cde" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var a=
+	[{
+		"name": "Ramu",
+		"addr": "Addanki",
+		"id": [222,888,111]
+	 },
+	 {		
+		"name":"Aruna",
+		"addr":"Hyd",
+		"id":[666,777,555]
+	 },
+	 {
+	 	"name": "Lalith",
+	 	"addr":"reddypalem",
+	 	"id": [999,444]
+	 }
+	]
+var b=
+	[{
+		"bname": "Ramu",
+		"baddr": "Addanki",
+		"bid": "281"
+	 },
+	 {		
+		"bname":"Aruna",
+		"baddr":"Hyd",
+		"bid":"675"
+	 },
+	 {
+	 	"bname": "Lalith",
+	 	"baddr":"reddypalem",
+	 	"bid": "974"
+	 }]
+
+---
+/* b map ()-> {
+	"name":$.bname,
+	"address1":$.baddr,
+	"bid":$.bid
+}*/
+
+a map(key,index)->{
+	"name": key.name,
+	"address":key.addr,
+	"id": key.id map(fullname :$ ++ key.name)
+}
+
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Map_MapObjectFlow1" doc:id="17676a68-af4e-4380-818a-3bf5f1c6555f" >
+		<ee:transform doc:name="Transform Message" doc:id="ab4eb6d8-5447-429e-b828-f6475072d06c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var a=
+	{
+    "name": "Ramu",
+    "addr1": "Addanki",
+    "id1": "A90"
+    }
+---
+a mapObject(value,key,index)->{
+	"inex":index,
+	"key":key,
+	"value":value
+
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

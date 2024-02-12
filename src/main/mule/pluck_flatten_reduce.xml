@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="dataweavepractice1Flow" doc:id="d457d83b-9bea-4697-9a5a-3ff42feedfdd" >
+		<ee:transform doc:name="flatten" doc:id="467b4119-8e2f-44af-b65e-97f51d7d286a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var a=
+	[		
+		 [222,888,111],
+		
+	
+		[666,777,555],
+	 
+	 	[999,444]
+	 
+	]
+
+---
+flatten(a)
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dataweavepractice1Flow2" doc:id="99dedc65-1911-445f-bf2e-53618c6b0ce1" >
+		<ee:transform doc:name="reduce" doc:id="36d15724-8484-4dd1-b279-e08d27c42a77" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var a=
+	[{
+    "name": "Ramu",
+    "addr1": "Addanki",
+    "id1": "125"
+    },
+    {
+    "name": "Aruna",
+    "addr1": "Hyderabad",
+    "id1": "5"
+    },
+    {
+    "name": "Lalith",
+    "addr1": "bapatla",
+    "id1": "5"
+    }]
+---
+//a reduce($$)
+//a reduce($)
+//a reduce($++$$)
+//a.id1 reduce($++$$)
+//a.id1 reduce($$++$)
+//a reduce((item,accum)-> item)
+//a reduce((item,accum)-> accum)
+// notworkng// a reduce((item,acc)-> (accum++item))
+//a.id1 reduce((item,accum=1)-> accum+ item)
+//a.id1 reduce((item,accum=2)-> accum * item)
+//a.id1 reduce((item,accum=90)-> accum - item)
+a.id1 reduce((item,accum)-> accum/item)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dataweavepractice1Flow1" doc:id="8710960d-6f98-4ac8-81e7-bb3c4925f272" >
+		<ee:transform doc:name="pluck" doc:id="f05de23d-20f9-4a25-9974-0547e1c42485" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var a=
+	{
+    "name": "Ramu",
+    "addr1": "Addanki",
+    "id1": "A90"
+    }
+---
+//a pluck($$$)
+a pluck($)
+//a pluck($$)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
