@@ -27,6 +27,7 @@ else "god"*/
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="60e88e1e-2b85-461b-a944-bdc01badb283" message="#[payload]"/>
 	</flow>
 	<flow name="multi-part" doc:id="ec42a36e-cf51-4015-8f88-cbea1e4df9c3" >
 		<http:listener doc:name="Listener" doc:id="e1303d7d-9200-4a96-9192-9d50b4c40aac" config-ref="HTTP_Listener_config" path="/test"/>
@@ -38,5 +39,6 @@ output application/json
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="d4092db9-bb63-446f-a39b-963c059a4d0f" message="#[payload]"/>
 	</flow>
 </mule>
